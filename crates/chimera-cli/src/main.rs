@@ -6,6 +6,7 @@
 mod calibrate;
 mod compare;
 mod diagnose;
+mod fit;
 mod js;
 mod render;
 mod wav;
@@ -31,6 +32,9 @@ usage: chimera <command> [args] [--float]
                  [--against earlier/score.json]  (distance to 23 real speakers, phone by phone)
   calibrate vowels     [male|female|child|all] [--out file]
   calibrate consonants [--out file]
+  fit voice      <in.wav> [outdir] [--iters n]
+                 (a body and a voice source that measure like the recording; writes voice.json,
+                 and あいうえお as fitted.wav and as the nearest preset, preset.wav)
 
 Output names are stems (<out>.wav). --float writes 32-bit float WAVs instead of 16-bit PCM.
 Calibration writes the tables the engine embeds, in crates/chimera/src/phonetics/.";
@@ -114,6 +118,7 @@ fn run(args: Vec<String>) -> Result<(), String> {
         ["diagnose", ..] => diagnose::run(&ctx, &args[1..]),
         ["calibrate", "vowels", ..] => calibrate::vowels(&args[2..]),
         ["calibrate", "consonants", ..] => calibrate::consonants(&args[2..]),
+        ["fit", "voice", ..] => fit::voice(&ctx, &args[2..]),
         ["help" | "--help" | "-h", ..] => {
             println!("{USAGE}");
             Ok(())

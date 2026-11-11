@@ -326,7 +326,7 @@ fn render_notes(notes: &[Note], body_name: &str, seconds: f64) -> Result<Render,
 }
 
 /// Mono samples and rate of a PCM (16/24/32-bit) or float WAV; channels are averaged.
-fn read_wav(path: &str) -> Result<(Vec<f64>, f64), String> {
+pub(crate) fn read_wav(path: &str) -> Result<(Vec<f64>, f64), String> {
     let b = std::fs::read(path).map_err(|e| format!("{path}: {e}"))?;
     let bad = || format!("{path}: not a WAV file this reader understands");
     if b.len() < 12 || &b[0..4] != b"RIFF" || &b[8..12] != b"WAVE" {
