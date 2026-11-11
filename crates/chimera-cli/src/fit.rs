@@ -428,7 +428,8 @@ pub fn voice(ctx: &Ctx, a: &[String]) -> Result<(), String> {
 
     println!();
     println!("  {:<22}{:>11}{:>11}{:>11}", "", "recording", preset_name, "fitted");
-    let rows: [(&str, fn(&Features) -> String); 8] = [
+    type Row = (&'static str, fn(&Features) -> String);
+    let rows: [Row; 8] = [
         ("F1 (Hz)", |x| f(x.formants[0], 0)),
         ("F2 (Hz)", |x| f(x.formants[1], 0)),
         ("F3 (Hz)", |x| f(x.formants[2], 0)),
