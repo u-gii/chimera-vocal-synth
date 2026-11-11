@@ -5,10 +5,11 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync, existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { writeGestures, CONTROL_KEYS, GESTURE_RECORD } from "../src/wasm/wire.ts";
 import type { Gesture } from "../src/wasm/types.ts";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const WASM = `${ROOT}target/wasm32-unknown-unknown/release/chimera_wasm.wasm`;
 const SOURCE_KEYS = ["f0", "glide", "pressure", "breathiness", "tension", "fry", "roughness", "vibratoDepth", "vibratoRate", "drift", "voiced", "brightness"];
 

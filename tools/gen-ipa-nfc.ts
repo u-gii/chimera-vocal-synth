@@ -14,6 +14,7 @@
  * Usage: bun tools/gen-ipa-nfc.ts
  */
 import { readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { initChimera, call } from "../src/wasm/chimera.ts";
 
 // the consonant inventory, from the engine (run `bun run wasm` first)
@@ -80,7 +81,7 @@ for (const s of significant) if (s.normalize("NFD") !== s && s !== "ç") throw n
 for (const [f, m] of comp) if (f === 0x63 && rankOf.get(m)! < rankOf.get(0x327)!) throw new Error("c composes before the cedilla");
 for (const [, d] of decomp) for (const c of d) if (significant.has(ch(c)) && !rankOf.has(c)) console.warn(`decomposition yields symbol ${ch(c)}`);
 
-const path = new URL("../crates/chimera/src/phonetics/ipaNfc.generated.json", import.meta.url).pathname;
+const path = fileURLToPath(new URL("../crates/chimera/src/phonetics/ipaNfc.generated.json", import.meta.url));
 const text = JSON.stringify({ ccc, decomp, comp });
 writeFileSync(path, text + "\n");
 console.log(`${marks.length} marks in ${classes.length} classes (${ccc.length} ranges), ${decomp.length} decompositions, ${comp.length} compositions, ${(text.length / 1024).toFixed(1)} KB`);

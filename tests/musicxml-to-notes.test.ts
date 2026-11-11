@@ -7,8 +7,9 @@ import { describe, expect, test } from "bun:test";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const TOOL = new URL("../tools/musicxml-to-notes.ts", import.meta.url).pathname;
+const TOOL = fileURLToPath(new URL("../tools/musicxml-to-notes.ts", import.meta.url));
 const dir = mkdtempSync(join(tmpdir(), "musicxml-"));
 
 /** a one-part score in 4/4, one beat per division, at 100 bpm */
