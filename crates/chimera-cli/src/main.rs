@@ -7,6 +7,7 @@ mod calibrate;
 mod compare;
 mod diagnose;
 mod fit;
+mod invert;
 mod js;
 mod render;
 mod wav;
@@ -33,8 +34,9 @@ usage: chimera <command> [args] [--float]
   calibrate vowels     [male|female|child|all] [--out file]
   calibrate consonants [--out file]
   fit voice      <in.wav> [outdir] [--iters n]
-                 (a body and a voice source that measure like the recording; writes voice.json,
-                 and あいうえお as fitted.wav and as the nearest preset, preset.wav)
+                 (inverts the recording's vocal tract postures, then fits a body and a voice source
+                 so its copy synthesis matches; writes voice.json, copy-fitted.wav, copy-<preset>.wav,
+                 ab.wav (recording | fitted | preset) and aiueo.wav)
 
 Output names are stems (<out>.wav). --float writes 32-bit float WAVs instead of 16-bit PCM.
 Calibration writes the tables the engine embeds, in crates/chimera/src/phonetics/.";
